@@ -8,6 +8,8 @@ const Products = () => {
   const [mainData,setMainData] = useState([])
   const [wishListData, setWishListData] = useState([]);
   const [count, setCount] = useState(12)
+  let listData = JSON.parse(localStorage.getItem("wishlistData")) || [];
+  console.log(listData,"listData")
 
   useEffect(() => {
     axios
@@ -41,10 +43,10 @@ const Products = () => {
   }
 
   const filterData= ["kids", "men", "women", "homedecor"]
-  var listData=[]
+  // var listData=[]
   const handleWishlist=((e)=>{
-    setWishListData(e)
-    listData.push(wishListData)
+    // setWishListData(e)
+    listData.push(e)
     localStorage.setItem('wishlistData',JSON.stringify(listData))
   })
 
