@@ -5,28 +5,43 @@ import Navbar from "./Navbar";
 const Products = () => {
   const [data, setData] = useState([]);
   const [filter,setFilter] = useState("");
+  const [mainData,setMainData] = useState([])
   const [wishListData, setWishListData] = useState([]);
 
   useEffect(() => {
     axios
       .get(
-        `https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-products?filter=${filter}`
+        `https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-products`
       )
       .then((res) => {
         setData(res.data.data);
+        setMainData(res.data.data)
       });
   }, []);
 
-  // console.log(data.data)
-
   const handleClick=(x)=>{
-    setFilter(x);
-    console.log(filter)
-    console.log(x);
+    const filterData = mainData.filter((el) => el.category.toLowerCase().includes(x.toLowerCase()));
+    setData(filterData)
+
+  }
+
+  const sortData = (value) =>{
+  var sortedData = [...data];
+    if(value=="lowToHigh"){
+      sortedData.sort((a,b)=>{
+        return a.price - b.price;
+      })
+    } else if(value=="highToLow"){
+      sortedData.sort((a,b)=>{
+        return b.price - a.price;
+      })
+    }
+    console.log(sortedData,"this is sorted data")
+    setData(sortedData);
+    console.log(data,"new new new")
   }
 
   const filterData= ["kids", "men", "women", "homedecor"]
-  console.log(wishListData,"widh")
 
   var wishlistJsonData
   var listData=[]
@@ -42,24 +57,35 @@ const Products = () => {
     setWishListData(e)
     listData.push(wishListData)
     localStorage.setItem('wishlistData',JSON.stringify(listData))
+    // console.log(wishListData,"wishlist data")
     // setMainData(listData)
   })
+  // console.log(wishListData,"wish in products")
 
   return (
     <>
-      {console.log(data, "data")}
       <div>
         <Navbar />
-        <div className="border">
-            <p>Products</p>
+        <div className="">
+            <p></p>
         </div>
         <div className="flex">
-        <div className="border mt-10 w-[200px]">
+          <div className="border">
+        <div className=" mt-10 w-[200px]">
                 <p className="font-bold">Filter</p>
                 <div className="text-semibold text-center">
-                {filterData.map(x => <p onClick={()=>handleClick(x)} className="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{x}</p>)}</div>
+                {filterData.map(x => <p key={x} onClick={()=>handleClick(x)} className="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{x}</p>)}</div>
             </div>
-        <div className="grid grid-cols-3 mx-auto items-center px-10 pt-10 gap-8">
+            <div>
+              <p className="font-bold">Sort</p>
+              <select onChange={(e)=>sortData(e.target.value)}>
+                <option>--</option>
+                <option value="lowToHigh">Low to high</option>
+                <option value="highToLow">High to low</option>
+              </select>
+            </div>
+            </div>
+        <div className="grid grid-cols-4 mx-auto items-center px-10 pt-10 gap-8">
           {data.map((e, i) => {
             return (
               <div key={e.id}>
