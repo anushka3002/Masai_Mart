@@ -7,17 +7,18 @@ const Products = () => {
   const [filter,setFilter] = useState("");
   const [mainData,setMainData] = useState([])
   const [wishListData, setWishListData] = useState([]);
+  const [count, setCount] = useState(12)
 
   useEffect(() => {
     axios
       .get(
-        `https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-products`
+        `https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-products?limit=${count}`
       )
       .then((res) => {
         setData(res.data.data);
         setMainData(res.data.data)
       });
-  }, []);
+  }, [count]);
 
   const handleClick=(x)=>{
     const filterData = mainData.filter((el) => el.category.toLowerCase().includes(x.toLowerCase()));
@@ -41,43 +42,35 @@ const Products = () => {
 
   const filterData= ["kids", "men", "women", "homedecor"]
 
-  var wishlistJsonData
   var listData=[]
 
   const handleWishlist=((e)=>{
-    // wishlistJsonData=JSON.parse(localStorage.getItem('wishlistData') || "[]")
-    // if(wishlistJsonData==null){
-    //   listData=[]
-    // }
-    // else{
-    //   listData=wishlistJsonData;
-    // }
     setWishListData(e)
     listData.push(wishListData)
     localStorage.setItem('wishlistData',JSON.stringify(listData))
     console.log(wishListData,"wishlist data")
-    // setMainData(listData)
   })
-  // console.log(wishListData,"wish in products")
+
+  const pageNext = () =>{
+    if(count<=data.length){
+      setCount(count=>count+12)
+    }
+  }
 
   return (
     <>
       <div>
         <Navbar />
-        <div className="">
-            <p></p>
-        </div>
         <div className="flex">
-          <div className="border">
-        <div className=" mt-10 w-[200px]">
-                <p className="font-bold">Filter</p>
+          <div className="border bg-[#f3f7fd] mt-10 rounded-[10px] px-3">
+        <div className="w-[200px]">
+                <p className="font-bold mb-5">Filter</p>
                 <div className="text-semibold text-center">
                 {filterData.map(x => <p key={x} onClick={()=>handleClick(x)} className="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{x}</p>)}</div>
             </div>
             <div>
-              <p className="font-bold">Sort</p>
+              <p className="font-bold mt-5">Sort</p>
               <select onChange={(e)=>sortData(e.target.value)}>
-                <option>--</option>
                 <option value="lowToHigh">Low to high</option>
                 <option value="highToLow">High to low</option>
               </select>
@@ -87,7 +80,7 @@ const Products = () => {
           {data.map((e, i) => {
             return (
               <div key={e.id}>
-                <div class="max-w-sm rounded shadow-lg border">
+                <div class="max-w-sm rounded shadow-lg border rounded-[10px]">
                   <img className="w-full" src={e.image} alt="Product"/>
                   <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{e.brand}</div>
@@ -115,6 +108,9 @@ const Products = () => {
             );
           })}
         </div>
+        </div>
+        <div className="items-end justify-end absolute right-10 my-4">
+          <button onClick={pageNext} className="border px-4 py-2 bg-[black] text-[white] rounded-[7px]">Show more</button>
         </div>
       </div>
     </>
