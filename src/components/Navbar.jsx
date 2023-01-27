@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
@@ -5,8 +6,8 @@ const Navbar = () => {
         <>
         <div className="w-full h-[80px] text-[white] bg-[black]">
             <div className="w-[200px] flex justify-between align-left absolute right-10 mt-6">
-            <p className="font-semibold">Products</p>
-            <p className="font-semibold">Wishlist</p>
+            <Link to={"/products"}><p className="font-semibold">Products</p></Link>
+            <Link to={"/wishlist"}><p className="font-semibold">Wishlist</p></Link>
             </div>   
         </div>
         </>
