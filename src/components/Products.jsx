@@ -36,9 +36,7 @@ const Products = () => {
         return b.price - a.price;
       })
     }
-    console.log(sortedData,"this is sorted data")
     setData(sortedData);
-    console.log(data,"new new new")
   }
 
   const filterData= ["kids", "men", "women", "homedecor"]
@@ -57,7 +55,7 @@ const Products = () => {
     setWishListData(e)
     listData.push(wishListData)
     localStorage.setItem('wishlistData',JSON.stringify(listData))
-    // console.log(wishListData,"wishlist data")
+    console.log(wishListData,"wishlist data")
     // setMainData(listData)
   })
   // console.log(wishListData,"wish in products")
@@ -89,7 +87,7 @@ const Products = () => {
           {data.map((e, i) => {
             return (
               <div key={e.id}>
-                <div onClick={()=>handleWishlist(e)} class="max-w-sm rounded shadow-lg border">
+                <div class="max-w-sm rounded shadow-lg border">
                   <img className="w-full" src={e.image} alt="Product"/>
                   <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{e.brand}</div>
@@ -107,8 +105,8 @@ const Products = () => {
                     </span>
                     </div>
                     <div>
-                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoBhKAylRmoKm3M9zHkHnGqlWpTZuxsoVf4QVutNnt1aMQGgm8ul69pIlhncZ2lbG0cDk&usqp=CAU" width="25px" height="25px"/>
+                    <span class="inline-block rounded-full cursor-pointer px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                      <img className="" onClick={()=>handleWishlist(e)} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoBhKAylRmoKm3M9zHkHnGqlWpTZuxsoVf4QVutNnt1aMQGgm8ul69pIlhncZ2lbG0cDk&usqp=CAU" width="25px" height="25px"/>
                     </span>
                     </div>
                   </div>

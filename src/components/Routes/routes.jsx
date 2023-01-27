@@ -7,7 +7,7 @@ export const Router=()=>{
     return(
     <>
     <Routes>
-        <Route exact path="/" element={<Navbar/>}/>
+        <Route exact path="/" element={<Products/>}/>
         <Route exact path="/products" element={<Products/>}/>
         <Route exact path="/wishlist" element={<Wishlist/>}/>
     </Routes>
