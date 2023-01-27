@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 
 const Wishlist = ()=>{
-
-    const [data,setData] = useState([])
-    var newData;
-
-    useEffect(()=>{
-       newData  = JSON.parse(localStorage.getItem('wishlistData'))|| [];
-        setData(newData)
-    },[])
+    var newData  = JSON.parse(localStorage.getItem('wishlistData'))|| [];
 
     return(
         <>
@@ -18,8 +11,9 @@ const Wishlist = ()=>{
             <div className="items-center mx-auto">
                 <p className="font-bold text-[30px] text-center text-[#57575c] items-center mx-auto">Wishlisted Items</p>
             </div>
+            {!newData.length? <div className="text-center mx-auto mt-[200px] text-[grey]">0 Wishlisted Item</div> :
             <div className="grid grid-cols-4 mx-auto items-center px-10 pt-10 gap-8">
-        {!newData? <div>0 Wishlisted Item</div> : data?.map((e, i) => {
+        {newData?.map((e, i) => {
             return (
               <div key={e.id}>
                   <div class="max-w-sm rounded shadow-lg border">
@@ -48,7 +42,7 @@ const Wishlist = ()=>{
                 </div>
         </div>
             )})}
-            </div>
+            </div>}
             </div>
         </>
     )
