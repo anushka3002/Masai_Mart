@@ -3,11 +3,10 @@ import Navbar from "./Navbar";
 
 const Wishlist = ()=>{
 
-    const [data,setData] = useState()
+    const [data,setData] = useState([])
 
     useEffect(()=>{
         var newData = JSON.parse(localStorage.getItem('wishlistData') || "[]");
-        console.log(newData,"newData");
         setData(newData)
     },[])
 
@@ -19,7 +18,7 @@ const Wishlist = ()=>{
                 <p className="font-bold text-[30px] text-center text-[#57575c] items-center mx-auto">Wishlisted Items</p>
             </div>
             <div className="grid grid-cols-4 mx-auto items-center px-10 pt-10 gap-8">
-        {data?.map((e, i) => {
+        {!data? <div>0 Wishlisted Item</div> : data?.map((e, i) => {
             return (
               <div key={e.id}>
                   <div class="max-w-sm rounded shadow-lg border">

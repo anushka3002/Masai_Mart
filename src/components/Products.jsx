@@ -41,14 +41,11 @@ const Products = () => {
   }
 
   const filterData= ["kids", "men", "women", "homedecor"]
-
   var listData=[]
-
   const handleWishlist=((e)=>{
     setWishListData(e)
     listData.push(wishListData)
     localStorage.setItem('wishlistData',JSON.stringify(listData))
-    console.log(wishListData,"wishlist data")
   })
 
   const pageNext = () =>{
